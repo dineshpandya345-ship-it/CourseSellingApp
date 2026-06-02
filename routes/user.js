@@ -4,7 +4,7 @@ const { UserModel, CourseModel, PurchaseModel } = require("../db.js");
 userRoutes.use(express.json());
 const bcrypt = require("bcrypt");
 const { jwt, USER_SECRET } = require("../auth.js")
-// const { userMW } = require("../middleWares/mw.js")
+const { userMW } = require("../middleWares/mw.js")
 
 userRoutes.post("/signup", async (req, res) => {
     const { email, password, firstName, lastName } = req.body;
@@ -55,28 +55,24 @@ userRoutes.post("/signin", async (req, res) => {
     }
 }
 )
+
 // // create course(auth needed)
 
-// userRoutes.post("/course/create", adminMW, async (req, res) => {
-//     const { title, description, price, imageUrl } = req.body;
-//     try {
-//         const response = await CourseModel.create({
-//             title,
-//             description,
-//             price,
-//             imageUrl,
-//             createrId: req.id
-//         })
-//         res.json({
-//             mssge: "course created successfully!"
-//         })
-//     }
-//     catch (err) {
-//         res.json({
-//             err
-//         })
-//     }
-// })
+userRoutes.get("/course/all-courses",  async (req, res) => {
+    console.log("user mw enter")
+    try{
+        const courses = await CourseModel.find({});
+        res.json({
+            courses
+        })
+    }
+    catch(err)
+    {
+        res.json({
+            error:err
+        })
+    }
+})
 
 // userRoutes.get("/courses/bulk", adminMW, async (req, res) => {
 //     const adminId = req.id;
@@ -96,7 +92,7 @@ userRoutes.post("/signin", async (req, res) => {
 // })
 
 
-module.exports = {
+module.exports = ({
     userRoutes: userRoutes
-}
+})
 

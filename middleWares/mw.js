@@ -1,5 +1,6 @@
 const {jwt,ADMIN_SECRET,USER_SECRET} = require("../auth.js");
 
+
 function adminMW(req,res,next)
 {
     try{
@@ -16,6 +17,24 @@ function adminMW(req,res,next)
     }
 }
 
+
+function userMW(req,res,next)
+{
+    try{
+    const token = req.headers.token;
+    const response = jwt.verify(token,USER_SECRET);
+     req.id = response.id;
+        next();
+    }
+    catch
+    {
+        res.json({
+            mssge:"user is not verified!"
+        })
+    }
+}
+
 module.exports = {
-    adminMW
+    adminMW,
+    userMW
 }

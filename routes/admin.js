@@ -4,7 +4,7 @@ const { AdminModel } = require("../db.js");
 adminRoutes.use(express.json());
 const bcrypt = require("bcrypt");
 const {jwt,ADMIN_SECRET} = require("../auth.js")
-
+const {adminMW} = require("../middleWares/mw.js")
 adminRoutes.post("/signup", async (req, res) => {
     const { email, password, firstName, lastName } = req.body;
     try {
@@ -54,6 +54,37 @@ adminRoutes.post("/signin", async (req, res) => {
     }
 }
 )
+// create course(auth needed)
+
+
+
+
+adminRoutes.post("/course/create",adminMW,(req,res)=>
+{
+    
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = {
     adminRoutes: adminRoutes

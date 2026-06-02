@@ -7,21 +7,21 @@
 </head>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.6/axios.min.js"></script>
     <script>
-        async function userSignUp()
+        async function adminSignUp()
         {
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
             const firstName = document.getElementById("firstName").value;
             const lastName = document.getElementById("lastName").value;
                try{
-                const res = await axios.post("http://localhost:3000/user/signup",{
+                const res = await axios.post("http://localhost:3000/admin/signup",{
                     email:email,
                     password:password,
                     firstName:firstName,
                     lastName:lastName
                 })
     
-                alert("user is Signed Up");
+                alert("admin is Signed Up");
             }
             catch(err)
             {
@@ -34,13 +34,13 @@
 
 
 <body>
-    <h1>user sign up</h1>
+    <h1>admin sign up</h1>
     <input type="text" placeholder="email" id="email">
     <input type="text" placeholder="password"id = "password">
     <input type="text" placeholder="firstName"id = "firstName">
     <input type="text" placeholder="lastName"id = "lastName">
-<a href="./userSignIn.html">already have an account?</a>
-    <button onclick="userSignUp()">sign up
+<a href="./adminSignIn.html">already have an account?</a>
+    <button onclick="adminSignUp()">sign up
     </button>
 </body>
 </html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    function checkAuth() {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("token is not available!");
+        }
+    }
+
+    async function createCourses() {
+        const token = localStorage.getItem("token");
+        const title = document.getElementById("title").value;
+        const description = document.getElementById("description").value;
+        const price = document.getElementById("price").value;
+        const imageUrl = document.getElementById("imageUrl").value;
+        alert("Entered into craete course")
+
+        try {
+            const response = await axios.post("http://localhost:3000/admin/course/create", {
+                title: title,
+                description: description,
+                price: price,
+                imageUrl: imageUrl
+            }, {
+                headers: {
+                    token: token
+                }
+            })
+            alert("Course is created!!");
+        }
+
+        catch (err) {
+            alert("course creation is failed!");
+            console.log(err);
+        }
+    }
+    checkAuth();
+</script>
+
+<body>
+    <h1>here the admin can create the courses!</h1>
+    <h2>enter the details of the course you wanna create!</h2>
+    <input type="text" name="" id="title" placeholder="title">
+    <input type="text" name="" id="description" placeholder="description">
+    <input type="number" name="" id="price" placeholder="price">
+    <input type="text" name="" id="imageUrl" placeholder="image url">
+    <button onclick="createCourses()">create course
+    </button>
+</body>
+
+</html>

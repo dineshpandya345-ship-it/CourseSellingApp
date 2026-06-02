@@ -1,10 +1,12 @@
 const express = require("express");
 const adminRoutes = express();
-const { AdminModel } = require("../db.js");
+const { AdminModel, CourseModel } = require("../db.js");
 adminRoutes.use(express.json());
 const bcrypt = require("bcrypt");
-const {jwt,ADMIN_SECRET} = require("../auth.js")
-const {adminMW} = require("../middleWares/mw.js")
+const { jwt, ADMIN_SECRET } = require("../auth.js")
+const { adminMW } = require("../middleWares/mw.js")
+
+
 adminRoutes.post("/signup", async (req, res) => {
     const { email, password, firstName, lastName } = req.body;
     try {
@@ -32,18 +34,17 @@ adminRoutes.post("/signin", async (req, res) => {
     const user = await AdminModel.findOne({
         email: email,
     })
-    if(user) {
+    if (user) {
         const hashedPassword = user.password;
-        const isMatch = await bcrypt.compare(password,hashedPassword);
-        if(isMatch)
-        {
+        const isMatch = await bcrypt.compare(password, hashedPassword);
+        if (isMatch) {
             // ab token dena he!
             const token = jwt.sign({
-                id:user._id
-            },ADMIN_SECRET);
+                id: user._id
+            }, ADMIN_SECRET);
 
             res.json({
-                token:token
+                token: token
             })
         }
     }
@@ -59,9 +60,26 @@ adminRoutes.post("/signin", async (req, res) => {
 
 
 
-adminRoutes.post("/course/create",adminMW,(req,res)=>
-{
-    
+adminRoutes.post("/course/create", adminMW, async (req, res) => {
+    const { title, description, price, imageUrl } = req.body;
+    try {
+        const response = await CourseModel.create({
+            title,
+            description,
+            price,
+            imageUrl,
+            createrId: req.id
+        })
+        res.json({
+            mssge: "course created successfully!"
+        })
+    }
+    catch (err) {
+        res.json({
+            err
+        })
+    }
+
 })
 
 

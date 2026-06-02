@@ -5,7 +5,7 @@ function adminMW(req,res,next)
     try{
     const token = req.headers.token;
     const response = jwt.verify(token,ADMIN_SECRET);
-    
+     req.id = response.id;
         next();
     }
     catch

@@ -1,0 +1,102 @@
+const express = require("express");
+const userRoutes = express();
+const { UserModel, CourseModel, PurchaseModel } = require("../db.js");
+userRoutes.use(express.json());
+const bcrypt = require("bcrypt");
+const { jwt, USER_SECRET } = require("../auth.js")
+// const { userMW } = require("../middleWares/mw.js")
+
+userRoutes.post("/signup", async (req, res) => {
+    const { email, password, firstName, lastName } = req.body;
+    try {
+        const hashedPassword = await bcrypt.hash(password, 1);
+        const response = await UserModel.create({
+            email: email,
+            password: hashedPassword,
+            firstName: firstName,
+            lastName: lastName
+        })
+        res.status(200).json({
+            mssge: "user signed up successfull!!"
+        })
+    }
+    catch (err) {
+        console.log(err);
+        res.json({
+            mssge: "User name is taken!!!!"
+        })
+    }
+})
+
+
+userRoutes.post("/signin", async (req, res) => {
+    const { email, password } = req.body;
+    const user = await UserModel.findOne({
+        email: email,
+    })
+    if (user) {
+        const hashedPassword = user.password;
+        const isMatch = await bcrypt.compare(password, hashedPassword);
+        if (isMatch) {
+            // ab token dena he!
+            const token = jwt.sign({
+                id: user._id
+            }, USER_SECRET);
+
+            res.json({
+                token: token
+            })
+        }
+    }
+    else {
+        res.json(
+            { mssge: "user does not exist!!" }
+        )
+    }
+}
+)
+// // create course(auth needed)
+
+// userRoutes.post("/course/create", adminMW, async (req, res) => {
+//     const { title, description, price, imageUrl } = req.body;
+//     try {
+//         const response = await CourseModel.create({
+//             title,
+//             description,
+//             price,
+//             imageUrl,
+//             createrId: req.id
+//         })
+//         res.json({
+//             mssge: "course created successfully!"
+//         })
+//     }
+//     catch (err) {
+//         res.json({
+//             err
+//         })
+//     }
+// })
+
+// userRoutes.get("/courses/bulk", adminMW, async (req, res) => {
+//     const adminId = req.id;
+//     try{
+//     const courses = await CourseModel.find({
+//         createrId: adminId
+//     })
+//     res.status(200).json({
+//         mssge: "Your all courses are",
+//         courses
+//     })  
+// }   catch(err){
+//         res.status(404).json({
+//             error:err
+//         })
+// }
+// })
+
+
+module.exports = {
+    userRoutes: userRoutes
+}
+

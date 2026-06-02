@@ -96,26 +96,6 @@ adminRoutes.get("/courses/bulk", adminMW, async (req, res) => {
 })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 module.exports = {
     adminRoutes: adminRoutes
 }

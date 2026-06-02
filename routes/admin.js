@@ -57,9 +57,6 @@ adminRoutes.post("/signin", async (req, res) => {
 )
 // create course(auth needed)
 
-
-
-
 adminRoutes.post("/course/create", adminMW, async (req, res) => {
     const { title, description, price, imageUrl } = req.body;
     try {
@@ -79,9 +76,24 @@ adminRoutes.post("/course/create", adminMW, async (req, res) => {
             err
         })
     }
-
 })
 
+adminRoutes.get("/courses/bulk", adminMW, async (req, res) => {
+    const adminId = req.id;
+    try{
+    const courses = await CourseModel.find({
+        createrId: adminId
+    })
+    res.status(200).json({
+        mssge: "Your all courses are",
+        courses
+    })  
+}   catch(err){
+        res.status(404).json({
+            error:err
+        })
+}
+})
 
 
 

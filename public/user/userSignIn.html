@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.6/axios.min.js"></script>
+<script>
+    async function userSignIn() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        try {
+            const res = await axios.post("http://localhost:3000/user/signin", {
+                email: email,
+                password: password,
+            })
+
+            alert("admin is Signed in");
+        }
+        catch (err) {
+            console(err);
+        }
+    }
+
+
+</script>
+
+
+<body>
+    <h1>user sign in</h1>
+    <input type="text" placeholder="email" id="email">
+    <input type="text" placeholder="password" id="password">
+    
+    <button onclick="userSignIn()">sign up
+    </button>
+</body>
+
+</html>

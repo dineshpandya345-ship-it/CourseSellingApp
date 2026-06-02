@@ -3,7 +3,7 @@ const adminRoutes = express();
 const { AdminModel } = require("../db.js");
 adminRoutes.use(express.json());
 const bcrypt = require("bcrypt");
-
+const {jwt,ADMIN_SECRET} = require("../auth.js")
 
 adminRoutes.post("/signup", async (req, res) => {
     const { email, password, firstName, lastName } = req.body;
@@ -27,12 +27,35 @@ adminRoutes.post("/signup", async (req, res) => {
     }
 
 })
-adminRoutes.post(".signin", (req, res) => {
+adminRoutes.post("/signin", async (req, res) => {
     const { email, password } = req.body;
+    const user = await AdminModel.findOne({
+        email: email,
+    })
+    if(user) {
+        const hashedPassword = user.password;
+        const isMatch = await bcrypt.compare(password,hashedPassword);
+        if(isMatch)
+        {
+            // ab token dena he!
+            const token = jwt.sign({
+                id:user._id
+            },ADMIN_SECRET);
 
-})
+            res.json({
+                token:token
+            })
+        }
+    }
+    else {
+        res.json(
+            { mssge: "user does not exist!!" }
+        )
+    }
+}
+)
+
 module.exports = {
     adminRoutes: adminRoutes
 }
-
 

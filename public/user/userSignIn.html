@@ -12,12 +12,16 @@
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
         try {
-            const res = await axios.post("http://localhost:3000/user/signin", {
+            const response = await axios.post("http://localhost:3000/user/signin", {
                 email: email,
                 password: password,
             })
 
-            alert("admin is Signed in");
+            const token = response.data.token;
+
+            localStorage.setItem("token",token);
+
+            window.location.href = "../courses/courses.html";
         }
         catch (err) {
             console(err);
@@ -33,7 +37,7 @@
     <input type="text" placeholder="email" id="email">
     <input type="text" placeholder="password" id="password">
     
-    <button onclick="userSignIn()">sign up
+    <button onclick="userSignIn()">sign in
     </button>
 </body>
 

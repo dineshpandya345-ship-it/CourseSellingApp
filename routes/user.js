@@ -4,7 +4,7 @@ const { UserModel, CourseModel, PurchaseModel } = require("../db.js");
 userRoutes.use(express.json());
 const bcrypt = require("bcrypt");
 const { jwt, USER_SECRET } = require("../auth.js")
-const { userMW } = require("../middleWares/mw.js")
+const { userMW } = require("../middleWares/mw.js");
 
 userRoutes.post("/signup", async (req, res) => {
     const { email, password, firstName, lastName } = req.body;
@@ -58,7 +58,7 @@ userRoutes.post("/signin", async (req, res) => {
 
 // // create course(auth needed)
 
-userRoutes.get("/course/all-courses",  async (req, res) => {
+userRoutes.get("/course/all-courses", userMW, async (req, res) => {
     console.log("user mw enter")
     try{
         const courses = await CourseModel.find({});

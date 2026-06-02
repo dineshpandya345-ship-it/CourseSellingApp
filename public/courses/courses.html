@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    async function getCourses() {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("token is not available");
+        }
+
+        try {
+            const response = await axios.get("http://localhost:3000/user/course/all-courses", {
+                headers: {
+                    token: token
+                }
+            })
+            const courses = response.data.courses;
+
+let finalData = "";
+
+courses.forEach(course => {
+
+    finalData += `
+        <div>
+            <h2>${course.title}</h2>
+            <p>${course.description}</p>
+            <h3>₹ ${course.price}</h3>
+            <hr>
+        </div>
+    `;
+});
+
+            document.getElementById("courseContent").innerHTML = finalData;
+        }
+        catch (err) {
+            alert("user is not logged in!");
+            console.log(err);
+        }
+    }
+    getCourses();
+</script>
+
+<body>
+    <h1>all courses are available here</h1>
+    <div id="courseContent"></div>
+</body>
+
+</html>

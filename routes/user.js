@@ -96,8 +96,28 @@ userRoutes.get("/course/purchase", userMW, async (req, res) => {
     }
 })
 
+userRoutes.get("/course/purchased-course", userMW, async (req, res) => {
+    const userId = req.id;
+    try{
+        const response = await PurchaseModel.find({
+            userId:userId,
+        })
+        res.status(200).json(
+            {
+                "purchased courses:":response
+            }
+        )
+    }
+    catch(err)
+    {
+        res.status(200).json({
+            error:error
+        })
+    }
+})
 
 module.exports = ({
     userRoutes: userRoutes
 })
+
 

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+    <script>
+        async function getCourses()
+        {
+            const adminId = req.id;
+            const response = await axios.get("http:3000/admin/courses/bulk",{
+                adminId
+            })
+        }
+    </script>
+
+<body>
+    <button onclick="getCourses">get courses</button>
+    <div id="courses!"></div>
+</body>
+</html>

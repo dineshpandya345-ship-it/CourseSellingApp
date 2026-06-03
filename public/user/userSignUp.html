@@ -20,27 +20,130 @@
                     firstName:firstName,
                     lastName:lastName
                 })
-    
                 alert("user is Signed Up");
             }
             catch(err)
             {
-                console(err);
+                console.log(err);
             }
         }
 
         
     </script>
+<style>
+    body {
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f3e8ff, #e0f2fe);
+        }
+    }
+
+    #signUpBox {
+        width: 360px;
+        padding: 30px;
+        background-color: #9983bfcd;
+        border-radius: 14px;
+
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 22px;
+        color: #111827;
+        text-transform: capitalize;
+    }
+
+    input {
+        padding: 10px 12px;
+
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+
+        outline: none;
+        font-size: 14px;
+
+        transition: all 0.2s ease;
+    }
+
+    input:focus {
+        border-color: #7c3aed;
+        box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+    }
+
+    #inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    button {
+        padding: 10px;
+
+        background: linear-gradient(135deg, #7c3aed, #6366f1);
+        color: white;
+
+        border: none;
+        border-radius: 8px;
+
+        cursor: pointer;
+        font-weight: bold;
+
+        transition: all 0.4s ease;
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+    }
+
+    a {
+        font-size: 17px;
+        text-align: center;
+        color: #6b7280;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #7c3aed;
+        text-decoration: underline;
+    }
+
+    #mainBox {
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 20px;
+        margin-top: 80px;
+    }
+
+    body {
+        background-image: url('https://www.scilife.io/hs-fs/hubfs/CL2.png?width=1200&height=675&name=CL2.png');
+    }
+</style>
 
 <body>
-    <h1>user sign up</h1>
-    <input type="text" placeholder="email" id="email">
-    <input type="text" placeholder="password"id = "password">
-    <input type="text" placeholder="firstName"id = "firstName">
-    <input type="text" placeholder="lastName"id = "lastName">
-<a href="./userSignIn.html">already have an account?</a>
-    <button onclick="userSignUp()">sign up
-    </button>
+    <div id="mainBox">
+        <div id="signUpBox">
+            <h1>user sign up</h1>
+            <div id="inputs">
+                <input type="text" placeholder="abc@gmail.com" id="email">
+                <input type="text" placeholder="password" id="password">
+                <input type="text" placeholder="firstName" id="firstName">
+                <input type="text" placeholder="lastName" id="lastName">
+                <a href="./userSignIn.html">already have an account?</a>
+                <button onclick="userSignUp()">sign up
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

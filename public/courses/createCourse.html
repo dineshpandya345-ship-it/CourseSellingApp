@@ -18,6 +18,11 @@
 
     async function createCourses() {
         const token = localStorage.getItem("token");
+        if(!token)
+    {
+        alert("invalid credentials")
+        return;
+    }
         const title = document.getElementById("title").value;
         const description = document.getElementById("description").value;
         const price = document.getElementById("price").value;

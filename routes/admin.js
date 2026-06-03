@@ -47,6 +47,12 @@ adminRoutes.post("/signin", async (req, res) => {
                 token: token
             })
         }
+        else {
+            res.status(404).json({
+                message: "password is not matched"
+            })
+            return;
+        }
     }
     else {
         res.json(
@@ -80,19 +86,19 @@ adminRoutes.post("/course/create", adminMW, async (req, res) => {
 
 adminRoutes.get("/courses/bulk", adminMW, async (req, res) => {
     const adminId = req.id;
-    try{
-    const courses = await CourseModel.find({
-        createrId: adminId
-    })
-    res.status(200).json({
-        mssge: "Your all courses are",
-        courses
-    })  
-}   catch(err){
-        res.status(404).json({
-            error:err
+    try {
+        const courses = await CourseModel.find({
+            createrId: adminId
         })
-}
+        res.status(200).json({
+            mssge: "Your all courses are",
+            courses
+        })
+    } catch (err) {
+        res.status(404).json({
+            error: err
+        })
+    }
 })
 
 

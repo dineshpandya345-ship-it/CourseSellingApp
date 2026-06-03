@@ -47,6 +47,12 @@ userRoutes.post("/signin", async (req, res) => {
                 token: token
             })
         }
+        else {
+            res.status(404).json({
+                message: "password is not matched"
+            })
+        
+        }
     }
     else {
         res.json(
@@ -56,20 +62,20 @@ userRoutes.post("/signin", async (req, res) => {
 }
 )
 
+
 // // create course(auth needed)
 
 userRoutes.get("/course/all-courses", userMW, async (req, res) => {
     console.log("user mw enter")
-    try{
+    try {
         const courses = await CourseModel.find({});
         res.json({
             courses
         })
     }
-    catch(err)
-    {
+    catch (err) {
         res.json({
-            error:err
+            error: err
         })
     }
 })
@@ -77,41 +83,39 @@ userRoutes.get("/course/all-courses", userMW, async (req, res) => {
 userRoutes.get("/course/purchase", userMW, async (req, res) => {
     const userId = req.id;
     const courseId = req.body.courseId;
-    try{
+    try {
         const response = await PurchaseModel.create({
-            userId:userId,
-            courseId:courseId
+            userId: userId,
+            courseId: courseId
         })
         res.status(200).json(
             {
-                mssge:"course purchased successfully!"
+                mssge: "course purchased successfully!"
             }
         )
     }
-    catch(err)
-    {
+    catch (err) {
         res.status(200).json({
-            error:error
+            error: error
         })
     }
 })
 
 userRoutes.get("/course/purchased-course", userMW, async (req, res) => {
     const userId = req.id;
-    try{
+    try {
         const response = await PurchaseModel.find({
-            userId:userId,
+            userId: userId,
         })
         res.status(200).json(
             {
-                "purchased courses:":response
+                "purchased courses:": response
             }
         )
     }
-    catch(err)
-    {
+    catch (err) {
         res.status(200).json({
-            error:error
+            error: error
         })
     }
 })

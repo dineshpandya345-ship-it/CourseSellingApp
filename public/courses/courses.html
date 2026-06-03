@@ -13,6 +13,7 @@
         const token = localStorage.getItem("token");
         if (!token) {
             alert("token is not available");
+            return;
         }
 
         try {

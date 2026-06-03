@@ -18,27 +18,131 @@
             })
 
             const token = response.data.token;
-
-            localStorage.setItem("token",token);
+            if (!token) {
+                alert("Invalid credentials!")
+                return;
+            }
+            localStorage.setItem("token", token);
 
             window.location.href = "../courses/courses.html";
         }
         catch (err) {
-            console(err);
+
+            console.log(err);
+            alert("Login failed. Please check email or password.");
+
+            window.location.href = window.location.href;
         }
     }
 
 
 </script>
 
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+
+        display: flex;
+        justify-content: flex-end;
+        /* moves content to right */
+        align-items: center;
+        /* keeps it vertically centered */
+
+        font-family: Arial, sans-serif;
+
+        background: linear-gradient(135deg, #f3e8ff, #e0f2fe),
+            url('https://www.scilife.io/hs-fs/hubfs/CL2.png?width=1200&height=675&name=CL2.png');
+        background-size: cover;
+        background-position: center;
+    }
+
+    #signinBox {
+        width: 360px;
+        padding: 30px;
+
+        background: white;
+        border-radius: 14px;
+
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 22px;
+        color: #111827;
+        text-transform: capitalize;
+    }
+
+    #signinBox {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    input {
+        padding: 10px 12px;
+
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+
+        outline: none;
+        font-size: 14px;
+
+        transition: all 0.2s ease;
+    }
+
+    input:focus {
+        border-color: #7c3aed;
+        box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+    }
+
+    button {
+        padding: 10px;
+
+        background: linear-gradient(135deg, #7c3aed, #6366f1);
+        color: white;
+
+        border: none;
+        border-radius: 8px;
+
+        cursor: pointer;
+        font-weight: bold;
+
+        transition: all 0.2s ease;
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+    }
+
+    body {
+        background-image: url('https://www.scilife.io/hs-fs/hubfs/CL2.png?width=1200&height=675&name=CL2.png');
+    }
+
+
+    #outBox {
+        margin-right: 80px;
+    }
+</style>
 
 <body>
-    <h1>user sign in</h1>
-    <input type="text" placeholder="email" id="email">
-    <input type="text" placeholder="password" id="password">
-    
-    <button onclick="userSignIn()">sign in
-    </button>
+    <div id="outBox">
+        <div id="rightBox">
+            <div id="signinBox">
+                <h1>user sign in</h1>
+                <input type="text" placeholder="email" id="email">
+                <input type="text" placeholder="password" id="password">
+                <a href="./userSignUp.html">create an account?</a>
+                <button onclick="userSignIn()">sign in
+                </button>
+            </div>
+
+        </div>
+    </div>
 </body>
 
 </html>
